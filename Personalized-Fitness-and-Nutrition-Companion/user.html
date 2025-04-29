@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0D1117;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Container Card */
+        .container {
+            background: #161B22;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0px 0px 12px rgba(255, 87, 34, 0.3);
+            transition: transform 0.3s;
+        }
+        
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            color: #ff5722;
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            font-size: 18px;
+            background: #21262D;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: left;
+            box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-info strong {
+            color: #ff9800;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .edit-btn {
+            background: #ff5722;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #e64a19;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #218838;
+        }
+
+        .back-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #e68900;
+        }
+
+        /* Form Fields */
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: none;
+            background: #21262D;
+            color: white;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>User Profile</h1>
+    
+    <div class="container">
+        <!-- Profile View -->
+        <div id="profileView">
+            <p class="profile-info"><strong>Name:</strong> <span id="displayName"></span></p>
+            <p class="profile-info"><strong>Email:</strong> <span id="displayEmail"></span></p>
+            <p class="profile-info"><strong>Gender:</strong> <span id="displayGender"></span></p>
+            <p class="profile-info"><strong>Age:</strong> <span id="displayAge"></span></p>
+            <p class="profile-info"><strong>Height (cm):</strong> <span id="displayHeight"></span></p>
+            <p class="profile-info"><strong>Weight (kg):</strong> <span id="displayWeight"></span></p>
+            <p class="profile-info"><strong>Goal:</strong> <span id="displayGoal"></span></p>
+            <button class="btn edit-btn" onclick="editProfile()">Edit Profile</button>
+            <button class="btn back-btn" onclick="window.location.href='home.html'">🏠 Back to Home</button>
+
+            
+            
+        </div>
+
+        <!-- Edit Profile View -->
+        <div id="editProfileView" class="hidden">
+            <label>Name:</label>
+            <input type="text" id="editName">
+
+            <label>Email:</label>
+            <input type="email" id="editEmail">
+
+            <label>Gender:</label>
+            <select id="editGender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label>Age:</label>
+            <input type="number" id="editAge">
+
+            <label>Height (cm):</label>
+            <input type="number" id="editHeight">
+
+            <label>Weight (kg):</label>
+            <input type="number" id="editWeight">
+
+            <label>Goal:</label>
+            <select id="editGoal">
+                <option value="Gain 0.5kg per week">Gain 0.5kg per week</option>
+                <option value="Gain 1kg per week">Gain 1kg per week</option>
+                <option value="Lose 1kg per week">Lose 1kg per week</option>
+                <option value="Lose 0.5kg per week">Lose 0.5kg per week</option>
+                <option value="Maintain weight">Maintain weight</option>
+            </select>
+
+            <button class="btn save-btn" onclick="saveProfile()">Save</button>
+        </div>
+    </div>
+
+    <script>
+        function loadProfile() {
+            document.getElementById("displayName").innerText = localStorage.getItem("userName") || "Not set";
+            document.getElementById("displayEmail").innerText = localStorage.getItem("userEmail") || "Not set";
+            document.getElementById("displayGender").innerText = localStorage.getItem("userGender") || "Not set";
+            document.getElementById("displayAge").innerText = localStorage.getItem("userAge") || "Not set";
+            document.getElementById("displayHeight").innerText = localStorage.getItem("userHeight") || "Not set";
+            document.getElementById("displayWeight").innerText = localStorage.getItem("userWeight") || "Not set";
+            document.getElementById("displayGoal").innerText = localStorage.getItem("userGoal") || "Not set";
+        }
+
+        function editProfile() {
+            document.getElementById("profileView").classList.add("hidden");
+            document.getElementById("editProfileView").classList.remove("hidden");
+
+            document.getElementById("editName").value = localStorage.getItem("userName") || "";
+            document.getElementById("editEmail").value = localStorage.getItem("userEmail") || "";
+            document.getElementById("editGender").value = localStorage.getItem("userGender") || "Male";
+            document.getElementById("editAge").value = localStorage.getItem("userAge") || "";
+            document.getElementById("editHeight").value = localStorage.getItem("userHeight") || "";
+            document.getElementById("editWeight").value = localStorage.getItem("userWeight") || "";
+            document.getElementById("editGoal").value = localStorage.getItem("userGoal") || "Maintain weight";
+        }
+
+        function saveProfile() {
+            localStorage.setItem("userName", document.getElementById("editName").value);
+            localStorage.setItem("userEmail", document.getElementById("editEmail").value);
+            localStorage.setItem("userGender", document.getElementById("editGender").value);
+            localStorage.setItem("userAge", document.getElementById("editAge").value);
+            localStorage.setItem("userHeight", document.getElementById("editHeight").value);
+            localStorage.setItem("userWeight", document.getElementById("editWeight").value);
+            localStorage.setItem("userGoal", document.getElementById("editGoal").value);
+
+            calculateCalorieTarget();
+            window.location.href = "home.html";
+        }
+
+        function calculateCalorieTarget() {
+            let calorieTarget = 2000;
+
+            switch (localStorage.getItem("userGoal")) {
+                case "Gain 0.5kg per week": calorieTarget = 2500; break;
+                case "Gain 1kg per week": calorieTarget = 3000; break;
+                case "Lose 0.5kg per week": calorieTarget = 1800; break;
+                case "Lose 1kg per week": calorieTarget = 1500; break;
+                default: calorieTarget = 2000;
+            }
+
+            localStorage.setItem("dailyCalorieGoal", calorieTarget);
+        }
+
+        window.onload = loadProfile;
+    </script>
+
+</body>
+</html>

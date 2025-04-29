@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Workout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #111;
+            color: white;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff3402;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .log-btn {
+            background: #ff3402;
+            color: white;
+            cursor: pointer;
+        }
+        .log-btn:hover {
+            background: #ff0000;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: grey;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Log Your Workout</h1>
+    <input type="text" id="workout" placeholder="Enter Workout Activity">
+    <button class="log-btn" onclick="logWorkout()">Log Workout</button>
+
+    <h3 id="burnt-calories"></h3>
+
+    <a href="home.html" class="back-btn">Back to Home</a>
+
+    <script>
+        function logWorkout() {
+            let calories = Math.floor(Math.random() * 300) + 200;
+            document.getElementById("burnt-calories").innerText = "Calories Burned: " + calories;
+        }
+    </script>
+
+</body>
+</html>

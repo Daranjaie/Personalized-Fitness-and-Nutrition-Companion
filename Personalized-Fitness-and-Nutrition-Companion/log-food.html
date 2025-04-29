@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Log Food</title>
+  <style>
+    /* General Page Styling */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff5722;
+      font-size: 32px;
+    }
+
+    h2 {
+      color: #ff9800;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    /* Calories Remaining Section */
+    .calories-container {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #1f1f1f;
+      border-radius: 10px;
+    }
+
+    #caloriesRemaining {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 15px auto;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background: #ffcc00;
+      width: 100%;
+      transition: width 0.5s ease-in-out;
+    }
+
+    /* Meal Section Cards */
+    .meal-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #252525;
+      border-radius: 10px;
+      display: inline-block;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 220px;
+      background: #333;
+      color: white;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .log-btn, .add-btn, .remove-btn {
+      background: #ff5722;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .log-btn:hover, .add-btn:hover {
+      background: #ff3d00;
+    }
+
+    .remove-btn {
+      background: red;
+    }
+
+    .remove-btn:hover {
+      background: darkred;
+    }
+
+    /* Back to Home Button Styling */
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: #ff5722;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #e64a19;
+    }
+
+    /* Food Items List */
+    .added-items {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .added-items li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #3a3a3a;
+      border-radius: 5px;
+      margin: 8px 0;
+    }
+
+    .food-info {
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Log Your Meals</h1>
+
+  <!-- Calories Remaining Section -->
+  <div class="calories-container">
+    <h2>Calories Remaining: <span id="caloriesRemaining">2000 kcal</span></h2>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <!-- Breakfast -->
+  <div class="meal-section">
+    <h2>Breakfast</h2>
+    <input type="text" id="breakfastSearch" placeholder="Search Breakfast Item">
+    <button class="add-btn" onclick="addItem('breakfast')">Add</button>
+    <ul id="breakfastList" class="added-items"></ul>
+  </div>
+
+  <!-- Lunch -->
+  <div class="meal-section">
+    <h2>Lunch</h2>
+    <input type="text" id="lunchSearch" placeholder="Search Lunch Item">
+    <button class="add-btn" onclick="addItem('lunch')">Add</button>
+    <ul id="lunchList" class="added-items"></ul>
+  </div>
+
+  <!-- Dinner -->
+  <div class="meal-section">
+    <h2>Dinner</h2>
+    <input type="text" id="dinnerSearch" placeholder="Search Dinner Item">
+    <button class="add-btn" onclick="addItem('dinner')">Add</button>
+    <ul id="dinnerList" class="added-items"></ul>
+  </div>
+
+  <!-- Snacks -->
+  <div class="meal-section">
+    <h2>Snacks</h2>
+    <input type="text" id="snacksSearch" placeholder="Search Snack Item">
+    <button class="add-btn" onclick="addItem('snacks')">Add</button>
+    <ul id="snacksList" class="added-items"></ul>
+  </div>
+
+  <button class="log-btn" onclick="calculateTotals()">Calculate Totals</button>
+  <h3 id="result"></h3>
+  <a href="home.html" class="back-btn">Back to Home</a>
+
+  <script>
+    let dailyCalorieGoal = parseInt(localStorage.getItem("dailyCalorieGoal")) || 2000;
+
+document.getElementById("caloriesRemaining").innerText = dailyCalorieGoal + " kcal";
+
+// Function to refresh calories on page load
+function updateCaloriesDisplay() {
+    dailyCalorieGoal = parseInt(localStorage.getItem("dailyCalorieGoal")) || 2000;
+    document.getElementById("caloriesRemaining").innerText = dailyCalorieGoal + " kcal";
+}
+
+// Call function on page load
+updateCaloriesDisplay();
+
+
+    function updateCaloriesRemaining() {
+      let totalCal = 0;
+
+      ["breakfast", "lunch", "dinner", "snacks"].forEach(meal => {
+        document.querySelectorAll(`#${meal}List li`).forEach(li => {
+          let qty = parseInt(li.querySelector("input").value || "1");
+          totalCal += parseInt(li.dataset.calories) * qty;
+        });
+      });
+
+      let remainingCalories = dailyCalorieGoal - totalCal;
+      document.getElementById("caloriesRemaining").innerText = remainingCalories + " kcal";
+      
+      let percentage = (remainingCalories / dailyCalorieGoal) * 100;
+      document.getElementById("progressBar").style.width = `${Math.max(0, percentage)}%`;
+    }
+
+    function addItem(meal) {
+      const searchInput = document.getElementById(meal + "Search").value.trim();
+      const foodList = document.getElementById(meal + "List");
+
+      if (!searchInput) return alert("Please enter a food name!");
+
+      const item = { name: searchInput, calories: Math.floor(Math.random() * 400), protein: (Math.random() * 20).toFixed(1) };
+
+      const listItem = document.createElement("li");
+      listItem.dataset.calories = item.calories;
+      listItem.innerHTML = `
+        <span class="food-info">${item.name} - ${item.calories} cal, ${item.protein}g protein</span>
+        <input type="number" value="1" min="1" oninput="updateCaloriesRemaining()">
+        <button class="remove-btn" onclick="this.parentElement.remove(); updateCaloriesRemaining();">X</button>
+      `;
+
+      foodList.appendChild(listItem);
+      updateCaloriesRemaining();
+    }
+
+    updateCaloriesRemaining();
+  </script>
+
+</body>
+</html>

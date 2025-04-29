@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Gym</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            font-family: sans-serif;
+        }
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('gymm.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+            padding-top: 20px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: auto;
+            padding: 15px 0;
+        }
+        .logo {
+            width: 120px;
+            filter: drop-shadow(0 0 10px #ff0000);
+        }
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        nav ul li a {
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        nav ul li a:hover {
+            color: #ff0000;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .logout-btn {
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background: darkred;
+        }
+        .content {
+            position: absolute;
+            top: 40%;
+            left: 8%;
+            text-align: left;
+        }
+        h2 {
+            font-size: 50px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        p {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #ccc;
+        }
+        button {
+            margin-top: 30px;
+            padding: 12px 40px;
+            background: #ff3402;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            scale: 0.95;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <nav>
+            <img src="logg.png" class="logo">
+            <ul>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="workout.html">WORKOUT PLAN</a></li>
+                <li><a href="membership.html">MEMBERSHIP</a></li>
+                <li><a href="logfood.html">LOG FOOD</a></li>
+                <li><a href="logworkout.html">LOG WORKOUT</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </nav>
+        <div class="content">
+            <h2>Unlock your fitness <br> potential with us</h2>
+            <p>Transform your Body, Transform your Life, Shape your body with us.</p>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            alert("Logged out successfully!");
+            window.location.href = "index.html";
+        }
+
+        if (!localStorage.getItem("loggedIn")) {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
