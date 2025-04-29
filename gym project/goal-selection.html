@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Your Goal</title>
+    <style>
+        body {
+            text-align: center;
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+        .goal-container {
+            background: #222;
+            padding: 20px;
+            width: 350px;
+            margin: auto;
+            border-radius: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #ff3402;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff0000;
+        }
+        .back-btn {
+            margin-top: 10px;
+            background: gray;
+        }
+    </style>
+    <script>
+        function saveGoal() {
+            const height = document.getElementById("height").value;
+            const weight = document.getElementById("weight").value;
+            const gender = document.getElementById("gender").value;
+            const goal = document.getElementById("goal").value;
+
+            if (!height || !weight || !gender || !goal) {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            let calorieTarget = 2000; // Default value
+
+            if (goal === "gain0.2") calorieTarget = 2200;
+            else if (goal === "gain0.5") calorieTarget = 2500;
+            else if (goal === "maintain") calorieTarget = 2000;
+            else if (goal === "lose1") calorieTarget = 1500;
+            else if (goal === "lose0.5") calorieTarget = 1700;
+
+            localStorage.setItem("userHeight", height);
+            localStorage.setItem("userWeight", weight);
+            localStorage.setItem("userGender", gender);
+            localStorage.setItem("userGoal", goal);
+            localStorage.setItem("dailyCalorieTarget", calorieTarget);
+
+            alert("Goal saved successfully!");
+            window.location.href = "home.html"; // Redirect to home after saving
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Set Your Goal</h1>
+    <div class="goal-container">
+        <input type="number" id="height" placeholder="Enter your height (cm)" required>
+        <input type="number" id="weight" placeholder="Enter your weight (kg)" required>
+        <select id="gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <select id="goal">
+            <option value="">Select Your Goal</option>
+            <option value="gain0.2">Gain 0.2kg/week</option>
+            <option value="gain0.5">Gain 0.5kg/week</option>
+            <option value="maintain">Maintain Weight</option>
+            <option value="lose1">Lose 1kg/week</option>
+            <option value="lose0.5">Lose 0.5kg/week</option>
+        </select>
+        <button onclick="saveGoal()">Save Goal</button>
+        <button class="back-btn" onclick="window.location.href='home.html'">Back</button>
+    </div>
+
+</body>
+</html>

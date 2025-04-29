@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #111;
+            color: white;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff3402;
+        }
+        .container {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .btn {
+            background: #ff3402;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 15px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background: #ff0000;
+        }
+        .hidden {
+            display: none;
+        }
+        .radio-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .radio-container input {
+            width: auto;
+            margin: 0;
+        }
+    </style>
+    <script>
+        function showPlanOptions() {
+            let weight = document.getElementById("weight").value;
+            let planSelection = document.getElementById("plan-selection");
+
+            if (weight >= 40 && weight <= 120) {
+                planSelection.classList.remove("hidden");
+            } else {
+                alert("Sorry, we provide workout plans only for users between 40kg and 120kg.");
+                planSelection.classList.add("hidden");
+            }
+        }
+
+        function redirectToPlan() {
+            let plan = document.querySelector('input[name="plan"]:checked');
+            if (plan) {
+                window.location.href = plan.value;
+            } else {
+                alert("Please select a plan.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Personalized Workout Plan</h1>
+    
+    <div class="container">
+        <label for="age">Enter Your Age:</label>
+        <input type="number" id="age" placeholder="Enter your age" required>
+
+        <label for="height">Enter Your Height (cm):</label>
+        <input type="number" id="height" placeholder="Enter your height" required>
+
+        <label for="weight">Enter Your Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter your weight" required oninput="showPlanOptions()">
+
+        <div id="plan-selection" class="hidden">
+            <label>Choose Your Goal:</label>
+
+            <div class="radio-container">
+                <input type="radio" id="bulking" name="plan" value="bulking.html">
+                <label for="bulking">💪 Bulking</label>
+            </div>
+
+            <div class="radio-container">
+                <input type="radio" id="weightloss" name="plan" value="weightloss.html">
+                <label for="weightloss">🔥 Weight Loss</label>
+            </div>
+
+            <button class="btn" onclick="redirectToPlan()">Get My Plan</button>
+        </div>
+    </div>
+
+    <br>
+    <a href="home.html" class="btn">Back to Home</a>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Features Unlocked</title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(120deg, #111, #222);
+            color: white;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #ff3402;
+            text-shadow: 2px 2px 5px black;
+        }
+        .features {
+            background: rgba(34, 34, 34, 0.9);
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 52, 2, 0.7);
+            text-align: left;
+        }
+        .features p {
+            background: rgba(255, 52, 2, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .marquee-container {
+            background: #222;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #ff3402;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: #ff0000;
+        }
+    </style>
+    <script>
+        function loadFeatures() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan'); // Get 'plan' from URL
+
+            let featuresList = `
+                <p>✅ Personalized Workout Plans Tailored for You</p>
+                <p>✅ Advanced Meal Tracking & Diet Suggestions</p>
+                <p>✅ Exclusive Fitness Tips & Training Videos</p>
+                <p>✅ 24/7 Expert Support & Live Chat</p>
+            `;
+
+            if (plan === 'yearly') {
+                featuresList += `
+                    <p>✅ Virtual Personal Trainer & AI Coaching</p>
+                    <p>✅ VIP Access to Gym Events & Premium Classes</p>
+                `;
+            }
+
+            document.getElementById("features").innerHTML = featuresList;
+        }
+    </script>
+</head>
+<body onload="loadFeatures()">
+
+    <div class="marquee-container">
+        <marquee>🎉 Congratulations! You Have Unlocked Exclusive Premium Features! 🎉</marquee>
+    </div>
+
+    <h1>Premium Features Unlocked</h1>
+
+    <div class="features" id="features">
+        <!-- Features will be loaded dynamically here -->
+    </div>
+
+    <a href="home.html" class="back-btn">🏠 Back to Home</a>
+
+</body>
+</html>
